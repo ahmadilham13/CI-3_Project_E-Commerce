@@ -28,7 +28,7 @@ if($warning) {
     <div class="col-md-12">
         <div class="alert <?= $alert_status; ?> alert-dismissible fade show" role="alert">
             <strong><?= $status; ?></strong> <?= $message; ?>
-            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </div>
 </div>
