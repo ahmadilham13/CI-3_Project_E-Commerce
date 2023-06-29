@@ -109,6 +109,7 @@ class Otp_model extends MY_Model {
             $data = [
                 'user_hash' => userHash($user_email, $user_role),
                 'otp_code'  => randomNumber(4),
+                'otp_used'  => false,
                 'expired'   => otpExpired(),
             ];
             $this->where('user_id', $user_id);
@@ -128,6 +129,7 @@ class Otp_model extends MY_Model {
                 'user_id'   => $user_id,
                 'user_hash' => userHash($user_email, $user_role),
                 'otp_code'  => randomNumber(4),
+                'otp_used'  => false,
                 'expired'   => otpExpired(),
             ];
             return $this->create($data);
