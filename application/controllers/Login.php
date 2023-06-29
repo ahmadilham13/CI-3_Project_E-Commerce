@@ -33,9 +33,8 @@ class Login extends MY_Controller {
             return;
         }
 
-        if($this->login->run($input)) {
-            $this->session->set_flashdata('success', 'Berhasil Melakukan Login');
-            redirect(base_url());
+        if($this->login->loginCheck($input)) {
+            redirect(base_url('/otp'));
         } else {
             $this->session->set_flashdata('error', 'Oops! your email or password not correctly');
             redirect(base_url('/login'));

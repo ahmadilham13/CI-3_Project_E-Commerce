@@ -15,17 +15,24 @@
     <link rel="stylesheet" href="/assets/libs/boostrap/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
     
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="/assets/libs/fontawesome/css/all.min.css">
     
+    <!-- OTP CSS -->
+    <?php if(isset($otp_style)) : ?>
+      <link rel="stylesheet" href="<?= $otp_style; ?>">
+    <?php endif; ?>
+    
   </head>
   <body>
    
-  <!-- Navbar Start -->
-  <?php $this->load->view('layouts/_navbar'); ?>
-  <!-- Navbar End -->
+  <?php if(!isset($otp_style) && !isset($otp_script)) : ?>
+    <!-- Navbar Start -->
+    <?php $this->load->view('layouts/_navbar'); ?>
+    <!-- Navbar End -->
+  <?php endif; ?>
 
   <!-- Content Start -->
   <?php $this->load->view($page); ?>
@@ -34,5 +41,8 @@
     <script src="/assets/libs/jquery/jquery-3.7.0.min.js"></script>
     <script src="/assets/libs/boostrap/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/app.js"></script>
+    <?php if(isset($otp_script)) : ?>
+      <script src="<?= $otp_script; ?>"></script>
+    <?php endif; ?>
   </body>
 </html>

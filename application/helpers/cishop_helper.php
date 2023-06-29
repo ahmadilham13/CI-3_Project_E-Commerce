@@ -45,5 +45,21 @@
         }
     }
 
+    function randomNumber($digits){
+        $min = pow(10, $digits - 1);
+        $max = pow(10, $digits) - 1;
+        return mt_rand($min, $max);
+    }
+
+    function userHash($userEmail, $userRole) {
+        $userHash = hash("md5", $userEmail . $userRole);
+        return $userHash;
+    }
+
+    function otpExpired() {
+        $newTime = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +2 minutes"));
+        return $newTime;
+    }
+
 
 ?>

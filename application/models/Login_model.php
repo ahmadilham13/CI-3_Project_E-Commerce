@@ -49,6 +49,23 @@ class Login_model extends MY_Model {
 
         return false;
     }
+
+    public function loginCheck($input) {
+        $query = $this->where('email', strtolower($input->email))
+                        ->where('is_active', 1)
+                        ->first();
+        if(!empty($query) && hashEncryptVerify($input->password, $query->password)) {
+            $data = [
+                'user_id_otp'       => $query->id,
+                'user_name_otp'     => $query->name,
+                'user_email_otp'    => $query->email,
+                'user_role_otp'     => $query->role
+            ];
+            $this->session->set_userdata($data);
+            return true;
+        }
+        return false;
+    }
 }
 
 /* End of file Login_model.php */
