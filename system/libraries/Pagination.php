@@ -523,7 +523,8 @@ class CI_Pagination {
 		}
 
 		// If something isn't quite right, back to the default base page.
-		if ( ! ctype_digit($this->cur_page) OR ($this->use_page_numbers && (int) $this->cur_page === 0))
+		if ( ($this->use_page_numbers && (int) $this->cur_page === 0))
+		// ! ctype_digit($this->cur_page) OR
 		{
 			$this->cur_page = $base_page;
 		}
