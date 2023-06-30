@@ -55,6 +55,7 @@ class Register_model extends MY_Model {
             'role'      => 'member',
         ];
 
+        // create user
         $user = $this->create($data);
 
         $sess_data = [

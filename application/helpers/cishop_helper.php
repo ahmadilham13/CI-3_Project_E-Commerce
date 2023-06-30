@@ -61,5 +61,25 @@
         return $newTime;
     }
 
+    function generateLink() {
+        $uniqId = uniqid();
+
+        $randStart = rand(1,5);
+
+        $rand8Char = substr($uniqId,$randStart,8);
+        return $rand8Char;
+    }
+
+    function emailVerify($user_id) {
+        $table_name = 'email_verification';
+        $CI         =& get_instance();
+        $query      = $CI->db->query("SELECT * FROM $table_name WHERE user_id=".$user_id."");
+        $is_verify = $query->result()[0]->is_verification;
+        if(!$is_verify) {
+            return false;
+        }
+        return true;
+    }
+
 
 ?>

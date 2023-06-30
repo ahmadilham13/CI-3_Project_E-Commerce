@@ -37,8 +37,14 @@ class Otp extends MY_Controller {
         }
         if($this->otp->run($otpCode)) {
                 if($this->otp->setUserLoginned()) {
-                    $this->session->set_flashdata('success', 'Berhasil Melakukan Login');
-                    redirect(base_url());
+                    $user_id = $this->session->userdata('id');
+                    if(!emailVerify($user_id)) {
+                        $this->session->set_flashdata('warning', 'Your E-Mail not verify!!');
+                        redirect(base_url('verification'));
+                    } else {
+                        $this->session->set_flashdata('success', 'Berhasil Melakukan Login');
+                        redirect(base_url());
+                    }
                 } else {
                     $this->session->set_flashdata('error', 'Oops! You Cannot Login right now, try again later');
                     redirect(base_url('/login'));

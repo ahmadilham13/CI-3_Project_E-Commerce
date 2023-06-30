@@ -34,8 +34,15 @@ class Register extends MY_Controller {
         }
 
         if($this->register->run($input)) {
-            $this->session->set_flashdata('success', 'Berhasil Melakukan Registrasi');
-            redirect(base_url());
+            $user_id = $this->session->userdata('id');
+
+            if(!emailVerify($user_id)) {
+                $this->session->set_flashdata('success', 'Berhasil Melakukan Registrasi, Cek Email untuk verifikasi email');
+                redirect(base_url('verification'));
+            } else {
+                $this->session->set_flashdata('success', 'Berhasil Melakukan Registrasi');
+                redirect(base_url());
+            }
         } else {
             $this->session->set_flashdata('error', 'Oops! terjadi suatu kesalahan registrasi');
             redirect(base_url('/register'));
