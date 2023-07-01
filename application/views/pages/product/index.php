@@ -49,7 +49,7 @@
                                 <span class="badge text-bg-primary"><i class="fas fa-tags"></i> <?= $row->category_title; ?></span>
                             </td>
                             <td>Rp. <?= number_format($row->price, 0, ',', '.'); ?>,-</td>
-                            <td><?= $row->is_available ? 'Tersedia' : 'Habis'; ?></td>
+                            <td><?= $row->is_available ? '<span class="badge text-bg-success">Tersedia</span>' : '<span class="badge text-bg-danger">Habis</span>'; ?></td>
                             <td>
                                 <a href="<?= base_url("product/edit/$row->id"); ?>">
                                     <button class="btn btn-sm">

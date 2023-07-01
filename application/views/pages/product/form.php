@@ -32,13 +32,14 @@
                         <div class="form-group">
                             <label for="">Category</label>
                             <?= form_dropdown('id_category', getDropdownList('category', ['id', 'title']), $input->id_category, ['class' => 'form-control']); ?>
+                            <?= form_error('id_category'); ?>
                         </div>
                         <div class="form-group">
                             <label for="">Stock</label>
                             <br />
                             <div class="form-check form-check-inline">
                                 <?= form_radio(['name' => 'is_available', 'value' => 1, 'checked' => $input->is_available == 1 ? true : false, 'class' => 'form-check-input']); ?>
-                                <label for="">Tersedia</label>
+                                <label for=""><span class="badge text-bg-success">Tersedia</span></label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <?= form_radio(['name' => 'is_available', 'value' => 0, 'checked' => $input->is_available == 0 ? true : false, 'class' => 'form-check-input']); ?>
@@ -48,13 +49,16 @@
                         <div class="form-group">
                             <label for="">Image Product</label>
                             <br />
-                            <?= form_upload('image'); ?>
+                            <?= form_upload('image', '', ['id' => 'image']); ?>
                             <?php if($this->session->flashdata('image_error')): ?>
                                 <small class="form-text text-danger"><?= $this->session->flashdata('image_error'); ?></small>
                             <?php endif; ?>
-                            <?php if($input->image) : ?>
-                                <img src="<?= base_url("images/products/$input->image"); ?>" alt="" height="150">
-                            <?php endif; ?>
+                            <div id="images_display">
+                                <?php if(isset($input->image) && !empty($input->image)) : ?>
+                                    <img src="<?= base_url("images/products/$input->image"); ?>" alt="" height="150">
+                                    <span onclick="deleteImage(0)" style="cursor: pointer;">&times;</span>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Simpan</button>
                     <?= form_close(); ?>
