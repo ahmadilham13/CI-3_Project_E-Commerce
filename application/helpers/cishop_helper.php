@@ -74,11 +74,22 @@
         $table_name = 'email_verification';
         $CI         =& get_instance();
         $query      = $CI->db->query("SELECT * FROM $table_name WHERE user_id=".$user_id."");
-        $is_verify = $query->result()[0]->is_verification;
-        if(!$is_verify) {
+        if($query) {
+            $is_verify = $query->result()[0]->is_verification;
+            if(!$is_verify) {
+                return false;
+            }
+        } else {
             return false;
         }
         return true;
+    }
+
+    function userRole() {
+        return [
+            'admin'     => 'Admin',
+            'member'    => 'Member',
+        ];
     }
 
 

@@ -58,6 +58,11 @@ class MY_Model extends CI_Model {
         $this->db->join($table, "$this->table.id_$table = $table.id", $type);
         return $this;
     }
+    
+    public function joinEmailVerify($table, $type = 'left') {
+        $this->db->join($table, "$this->table.id = $table.user_id", $type);
+        return $this;
+    }
 
     public function orderBy($columns, $order = 'asc') {
         $this->db->order_by($columns, $order);
