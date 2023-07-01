@@ -1,10 +1,12 @@
 <main class="container">
-    <?php $this->load->view('layouts/_alert'); ?>
     <div class="row">
-        <div class="col-md-10 mx-auto">
-            <div class="card mb-3">
+        <div class="col-md-3">
+            <?php $this->load->view('layouts/_menu'); ?>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
                 <div class="card-header">
-                    <span>Formulir Pengguna</span>
+                    Formulir Profile
                 </div>
                 <div class="card-body">
                     <?= form_open_multipart($form_action, ['method' => 'POST']); ?>
@@ -16,13 +18,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">E-Mail</label>
-                            <?php 
-                                $readonly = [];
-                                if(isset($is_verify)) {
-                                    $readonly = $is_verify == true ? ['readonly' => true] : [];
-                                }
-                            ?>
-                            <?= form_input(array_merge(['type' => 'email', 'name' => 'email', 'value' => $input->email, 'class' => 'form-control', 'placeholder' => 'Masukkan alamat email aktif', 'required' => true], $readonly)); ?>
+                            <?= form_input(['type' => 'email', 'name' => 'email', 'value' => $input->email, 'class' => 'form-control', 'placeholder' => 'Masukkan alamat email aktif', 'required' => true, 'readonly' => true]); ?>
                             <?= form_error('email'); ?>
                         </div>
                         <div class="form-group">
@@ -32,27 +28,6 @@
                             ?>
                             <?= form_password('password', '', ['class' => 'form-control', 'placeholder' => 'Masukkan Password min. 8 char'], $required); ?>
                             <?= form_error('password'); ?>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Role</label>
-                            <select name="role" class="form-control">
-                                <option value="">-- Select Role --</option>
-                                <?php foreach(userRole() as $key => $value) : ?>
-                                <option value="<?= $key; ?>" <?= $key === $input->role ? 'selected' : ''; ?>><?= $value; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Status</label>
-                            <br />
-                            <div class="form-check form-check-inline">
-                                <?= form_radio(['name' => 'is_active', 'value' => 1, 'checked' => $input->is_active == 1 ? true : false, 'class' => 'form-check-input']); ?>
-                                <label for="" class="form-check-label">Active</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <?= form_radio(['name' => 'is_active', 'value' => 0, 'checked' => $input->is_active == 0 ? true : false, 'class' => 'form-check-input']); ?>
-                                <label for="" class="form-check-label">Non-Active</label>
-                            </div>
                         </div>
                         <div class="form-group">
                             <label for="">Photo</label>
@@ -71,7 +46,7 @@
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
                     <?= form_close(); ?>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
   </main>

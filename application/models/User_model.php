@@ -58,9 +58,9 @@ class User_model extends MY_Model {
             'role'  => $input->role,
             'image_profile' => $input->image_profile
         ];
-        if(!empty($input->password)) {
-            $data['password']   = hashEncrypt($input->password);
-        }
+        // if(!empty($input->password)) {
+        //     $data['password']   = hashEncrypt($input->password);
+        // }
 
         // update user
         $userId = $this->user->where('id', $id)->update($data);

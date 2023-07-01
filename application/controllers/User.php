@@ -115,7 +115,7 @@ class User extends MY_Controller {
 
     public function edit($id) {
         $data['content']    = $this->user->where('id', $id)->first();
-
+        $data['is_verify'] = $this->db->where('user_id', $id)->get('email_verification')->row()->is_verification;
         if(!$data['content']) {
             $this->session->set_flashdata('warning', 'User not found');
             redirect(base_url('user'));
