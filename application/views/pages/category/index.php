@@ -45,7 +45,7 @@
                                             <i class="fas fa-edit text-info"></i>
                                         </button>
                                     </a>
-                                    <?= form_open("category/delete/$row->id", ['method' => 'POST']); ?>
+                                    <?= form_open(base_url("category/delete/$row->id"), ['method' => 'POST']); ?>
                                         <?= form_hidden('id', $row->id); ?>
                                         <button class="btn btn-sm" type="submit" onclick="return confirm('are you sure want to delete this category?')">
                                             <i class="fas fa-trash text-danger"></i>
