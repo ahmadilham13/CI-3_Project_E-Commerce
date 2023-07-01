@@ -49,10 +49,8 @@
                                 <td><?= $row->role; ?></td>
                                 <td><?= $row->is_active == true ? '<span class="badge text-bg-success">Active</span>' : '<span class="badge text-bg-danger">Not Active</span>'; ?></td>
                                 <td>
-                                    <a href="<?= base_url("user/edit/$row->id"); ?>">
-                                        <button class="btn btn-sm">
-                                            <i class="fas fa-edit text-info"></i>
-                                        </button>
+                                    <a href="<?= base_url("user/edit/$row->id"); ?>" class="btn btn-sm">
+                                        <i class="fas fa-edit text-info"></i>
                                     </a>
                                     <?= form_open(base_url("user/delete/$row->id"), ['method' => 'POST']); ?>
                                         <?= form_hidden('id', $row->id); ?>
