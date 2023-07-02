@@ -80,7 +80,8 @@ class Checkout extends MY_Controller {
                 $this->db->insert('orders_detail', $row);
             }
 
-            $this->db->delete('cart', ['id_user', $this->id]);
+            $this->db->where('id_user', $this->id);
+            $this->db->delete('cart');
 
             $this->session->set_flashdata('success', 'Data Checkout Successfully');
             $data['title']      = 'Checkout Success';
