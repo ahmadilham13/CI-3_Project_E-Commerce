@@ -31,7 +31,10 @@ class Otp_model extends MY_Model {
                     ];
                     $this->where('user_id', $user_id);
                     $this->update($data);
-                    return true;
+                    
+                    if($query->expired > date("Y-m-d H:i:s")) {
+                        return true;
+                    }
                 }
             }
         }

@@ -3,9 +3,9 @@
 }
 
 .card {
-    width: 400px;
+    width: 500px;
     border: none;
-    height: 300px;
+    height: 400px;
     box-shadow: 0px 5px 20px 0px #d2dae3;
     z-index: 1;
     display: flex;

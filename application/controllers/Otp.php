@@ -26,7 +26,9 @@ class Otp extends MY_Controller {
             $data['otp_script'] = '/assets/js/otp.js';
             $data['page']   = 'pages/auth/otp';
             $data['input']  = $input;
-            $this->otp->generateOtp();
+            if($this->session->flashdata('sending_otp')) {
+                $this->otp->generateOtp();
+            }
             $this->view($data);
             return;
         }
@@ -50,10 +52,21 @@ class Otp extends MY_Controller {
                     redirect(base_url('/login'));
                 }
         } else {
-            $this->session->set_flashdata('error', 'Oops! your OTP not correctly');
+            $this->session->set_flashdata('resend_otp', 'Resend OTP');
+            
+            $this->session->set_flashdata('error', 'OTP expired or incorrectly, Please try again');
             redirect(base_url('/otp'));
         }
     }
+
+    public function resend() {
+        
+        $this->session->set_flashdata('sending_otp', 'Sending OTP');
+        
+        redirect(base_url('otp'));
+        return;
+    }
+
 
 }
 

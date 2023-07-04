@@ -20,6 +20,13 @@
                     <button class="btn btn-danger px-4 validate" type="submit">Validate</button> 
                 </div>
                 <?= form_close(); ?>
+                <?php if($this->session->flashdata('resend_otp')) : ?>
+                    <?= form_open("otp/resend", ['method' => 'POST']); ?>
+                    <div class="mt-4"> 
+                        <button class="btn btn-warning px-4 validate" type="submit">Resend</button> 
+                    </div>
+                    <?= form_close(); ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>

@@ -21,7 +21,7 @@ class Order extends MY_Controller {
         $data['content']        = $this->order->orderBy('date', 'DESC')->paginate($page)->get();
         $data['total_rows']      = $this->order->count();
         $data['pagination']     = $this->order->makePagination(
-            base_url('ordder'), 2, $data['total_rows']
+            base_url('order'), 2, $data['total_rows']
         );
         $data['page']           = 'pages/order/index';
         // $data['numbers']        = ($this->category->dataPerPage() * $page) - $page;
@@ -84,7 +84,7 @@ class Order extends MY_Controller {
         $data['content']        = $this->order->orderBy('date', 'DESC')->like('name', $keyword)->orLike('invoice', $keyword)->paginate($page)->get();
         $data['total_rows']      = $this->order->like('name', $keyword)->orLike('invoice', $keyword)->count();
         $data['pagination']     = $this->order->makePagination(
-            base_url('ordder'), 2, $data['total_rows']
+            base_url('order'), 2, $data['total_rows']
         );
         $data['page']           = 'pages/order/index';
         // $data['numbers']        = ($this->category->dataPerPage() * $page) - $page;

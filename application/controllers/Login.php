@@ -34,6 +34,7 @@ class Login extends MY_Controller {
         }
 
         if($this->login->loginCheck($input)) {
+            $this->session->set_flashdata('sending_otp', 'Sending OTP');
             redirect(base_url('/otp'));
         } else {
             $this->session->set_flashdata('error', 'Oops! your email or password not correctly');
