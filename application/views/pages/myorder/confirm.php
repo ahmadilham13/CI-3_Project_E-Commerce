@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                      <button type="submit" class="btn btn-success">Konfirmasi Pembayaran</button>
+                      <button type="submit" class="btn btn-success">Lanjut Pembayaran</button>
                     </div>
                 <?= form_close(); ?>
             </div>

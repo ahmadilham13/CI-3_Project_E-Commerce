@@ -8,10 +8,11 @@ class Checkout_model extends MY_Model {
 
     public function getDefaultValues() {
         return [
-            'name'          => '',
-            'address'       => '',
-            'phone'         => '',
-            'status'        => '',
+            'first_name'            => '',
+            'last_name'             => '',
+            'address'               => '',
+            'phone'                 => '',
+            'status'                => '',
         ];
     }
     

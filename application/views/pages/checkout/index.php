@@ -7,11 +7,16 @@
                 Formulir Alamat Pengiriman
             </div>
             <div class="card-body">
-                <form action="<?= base_url("/checkout/create"); ?>" method="POST">
+                <form action="<?= base_url("/checkout/create"); ?>" method="POST" id="user_data_checkout">
                     <div class="form-group">
-                        <label for="">Nama</label>
-                        <input type="text" class="form-control" name="name" placeholder="Masukkan Nama Penerima" value="<?= $input->name; ?>"/>
-                        <?= form_error('name'); ?>
+                        <label for="">First Name</label>
+                        <input type="text" class="form-control" name="first_name" placeholder="Masukkan First Name Penerima" value="<?= $input->first_name; ?>"/>
+                        <?= form_error('first_name'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" placeholder="Masukkan Last Name Penerima" value="<?= $input->last_name; ?>"/>
+                        <?= form_error('last_name'); ?>
                     </div>
                     <div class="form-group">
                         <label for="">Alamat</label>
@@ -24,7 +29,7 @@
                         <?= form_error('phone'); ?>
                     </div>
 
-                    <button class="btn btn-primary mt-3" type="submit">Checkout</button>
+                    <button class="btn btn-primary mt-3" id="pay-button" type="submit">Checkout</button>
                 </form>
             </div>
         </div>
