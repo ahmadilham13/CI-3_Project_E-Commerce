@@ -62,7 +62,7 @@ class Profile extends MY_Controller {
         if(!$this->profile->validate()) {
             $data['title']          = 'Ubah Data Profile';
             $data['form_action']    = base_url("profile/update/$id");
-            $data['user_script'] = '/assets/js/uploadImage.js';
+            $data['imageUpload']    = '/assets/js/uploadImage.js';
             $data['page']           = 'pages/profile/form';
 
             $this->view($data);

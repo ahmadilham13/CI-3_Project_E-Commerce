@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label for="">Photo</label>
                             <br />
-                            <?= form_upload('image_profile', '', ['id' => 'image_profile']); ?>
+                            <?= form_upload('image_profile', '', ['id' => 'image_profile', 'class' => 'images']); ?>
                             <?php if($this->session->flashdata('image_error')): ?>
                                 <small class="form-text text-danger"><?= $this->session->flashdata('image_error'); ?></small>
                             <?php endif; ?>

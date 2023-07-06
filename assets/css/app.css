@@ -75,3 +75,14 @@ body {
     min-height: 75rem;
     padding-top: 4.5rem;
 }
+
+/* Rating */
+.product-ratting {
+  display: flex;
+  align-items: flex-end;
+}
+
+.review-score {
+  display: flex;
+}
+

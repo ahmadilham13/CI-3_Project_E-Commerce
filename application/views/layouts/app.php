@@ -44,8 +44,8 @@
     <?php if(isset($otp_script)) : ?>
       <script src="<?= $otp_script; ?>"></script>
     <?php endif; ?>
-    <?php if(isset($product_script)) : ?>
-      <script src="<?= $product_script; ?>"></script>
+    <?php if(isset($imageUpload)) : ?>
+      <script src="<?= $imageUpload; ?>"></script>
     <?php endif; ?>
   </body>
 </html>

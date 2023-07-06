@@ -20,3 +20,17 @@ function stringToSlug (str) {
 
     return str;
 }
+
+const reviewScore = document.querySelectorAll('.review-score');
+reviewScore.forEach((score) => {
+  const scoreValue = score.getAttribute('data-score');
+  let scoreHtml = '';
+  for (let i = 0; i < 5; i++) {
+    if (i < (scoreValue-0.5)) {
+      scoreHtml += `<div class="star-fill"></div>`;
+    } else {
+      scoreHtml += `<div class="star-empty"></div>`;
+    }
+  }
+  score.innerHTML = scoreHtml;
+});

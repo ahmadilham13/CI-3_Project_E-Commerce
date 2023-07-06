@@ -1,4 +1,6 @@
-const imageUpload = document.getElementById('image')
+// const imageUpload = document.getElementById('image')
+const imageUpload = document.querySelectorAll('.images')[0]
+
 let imagesArray = []
 imageUpload.addEventListener('change', function() {
     const file = imageUpload.files

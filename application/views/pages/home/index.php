@@ -23,8 +23,12 @@
               <div class="card-body">
                 <h5 class="card-title"><?= $row->product_title; ?></h5>
                 <p class="card-text"><strong>Rp. <?= number_format($row->price, 0, ',', '.'); ?>,-</strong></p>
-                <p class="card-text"><?= $row->description; ?></p>
                 <a href="<?= base_url("shop/category/$row->category_slug"); ?>" class="badge rounded-pill text-bg-primary"><i class="fas fa-tags"></i> <?= $row->category_title; ?></a>
+                <!-- rating -->
+                <div class="product-ratting">
+                  <div class="review-score" data-score="<?=$ratting ?>"></div>
+                  <span><?=$ratting ?> (<?php echo $ratting_count ?> Rating)</span>
+                </div>
               </div>
               <div class="card-footer">
                 <form action="<?= base_url("cart/add"); ?>" method="POST">
@@ -39,7 +43,7 @@
               </div>
             </div>
           </div>
-          <?php endforeach; ?>
+      <?php endforeach; ?>
 
         </div>
 

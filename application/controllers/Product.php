@@ -96,7 +96,7 @@ class Product extends MY_Controller {
             $data['title']          = 'Add Product';
             $data['input']          = $input;
             $data['form_action']    = base_url('product/create');
-            $data['product_script'] = '/assets/js/uploadImage.js';
+            $data['imageUpload'] = '/assets/js/uploadImage.js';
             $data['page']           = 'pages/product/form';
 
             $this->view($data);
@@ -142,7 +142,7 @@ class Product extends MY_Controller {
         if(!$this->product->validate()) {
             $data['title']          = 'Edit Product';
             $data['form_action']    = base_url("product/edit/$id");
-            $data['product_script'] = '/assets/js/uploadImage.js';
+            $data['imageUpload'] = '/assets/js/uploadImage.js';
             $data['page']           = 'pages/product/form';
 
             $this->view($data);
