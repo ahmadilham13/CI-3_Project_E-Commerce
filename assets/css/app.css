@@ -78,11 +78,37 @@ body {
 
 /* Rating */
 .product-ratting {
+  margin-top: 5px;
   display: flex;
   align-items: flex-end;
 }
 
 .review-score {
   display: flex;
+}
+
+.star-empty {
+  -webkit-mask: url(../images/icons/star-empty.svg) no-repeat center;
+  mask: url(../images/icons/star-fill.svg) no-repeat center;
+  background-color: rgba(136, 136, 136, 0.3215686275);
+  margin-right: 0px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  /* background-color: #010101; */
+  background-size: cover;
+}
+
+.star-fill {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-color: #010101;
+  background-size: cover;
+
+  -webkit-mask: url(../images/icons/star-empty.svg) no-repeat center;
+  mask: url(../images/icons/star-empty.svg) no-repeat center;
+  background-color: #FFC700;
+  margin-right: 0px;
 }
 

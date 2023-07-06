@@ -26,8 +26,8 @@
                 <a href="<?= base_url("shop/category/$row->category_slug"); ?>" class="badge rounded-pill text-bg-primary"><i class="fas fa-tags"></i> <?= $row->category_title; ?></a>
                 <!-- rating -->
                 <div class="product-ratting">
-                  <div class="review-score" data-score="<?=$ratting ?>"></div>
-                  <span><?=$ratting ?> (<?php echo $ratting_count ?> Rating)</span>
+                  <div class="review-score" data-score="2"></div>
+                  <span>2 (2 Rating)</span>
                 </div>
               </div>
               <div class="card-footer">
