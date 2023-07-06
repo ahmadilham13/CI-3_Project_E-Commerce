@@ -60,10 +60,10 @@
           
           $.ajax({
             method: 'POST',
-            url : '<?= base_url('/checkout/pay'); ?>',
+            url : '<?= base_url('/pay'); ?>',
             cache: false,
             data: {
-              form_user_data: $("#user_data_checkout").serialize()
+              order_id: $("#order_id").html()
             },
             success: function(data) {
               console.log(data)

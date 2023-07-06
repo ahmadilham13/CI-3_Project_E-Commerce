@@ -7,20 +7,35 @@ class Checkout_model extends MY_Model {
     public $table = 'orders';
 
     public function getDefaultValues() {
-        return [
-            'first_name'            => '',
-            'last_name'             => '',
-            'address'               => '',
-            'phone'                 => '',
-            'status'                => '',
-        ];
+        $this->table = 'user';
+        $userId = $this->session->userdata('id');
+        $query = $this->where('id', $userId)
+                        ->where('is_active', 1)
+                        ->first();
+
+            return [
+                'first_name'            => $query->first_name ? $query->first_name : '',
+                'last_name'             => $query->last_name ? $query->last_name : '',
+                'address'               => '',
+                'email'                 => $query->email ? $query->email : '',
+                'phone'                 => $query->phone ? $query->phone : '',
+                'status'                => '',
+                'city'                  => '',
+                'postal_code'           => '',
+            ];
+
     }
     
     public function getValidationRules() {
         $validationRules = [
             [
-                'field'     => 'name',
-                'label'     => 'Nama',
+                'field'     => 'first_name',
+                'label'     => 'First Name',
+                'rules'     => 'trim|required'
+            ],
+            [
+                'field'     => 'last_name',
+                'label'     => 'Last Name',
                 'rules'     => 'trim|required'
             ],
             [

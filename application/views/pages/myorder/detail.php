@@ -7,7 +7,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
-                    Detail Order <?= $order->invoice; ?>
+                    Detail Order <a id="order_id"><?= $order->invoice; ?></a>
                     <div class="float-end">
                         <?php $this->load->view('layouts/_status', ['status' => $order->status]); ?>
                     </div>
@@ -47,9 +47,9 @@
                         </tbody>
                     </table>
                 </div>
-                <?php if($order->status === 'waiting') : ?>
+                <?php if($order->status === 'pending') : ?>
                     <div class="card-footer">
-                    <a href="<?= base_url("myorder/confirm/$order->invoice"); ?>" class="btn btn-success">Konfirmasi Pembayaran</a>
+                        <a href="" class="btn btn-success" id="pay-button">Pay</a>
                     </div>
                 <?php endif; ?>
             </div>

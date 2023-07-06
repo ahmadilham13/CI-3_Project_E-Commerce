@@ -7,7 +7,7 @@
                 Formulir Alamat Pengiriman
             </div>
             <div class="card-body">
-                <form action="<?= base_url("/checkout/create"); ?>" method="POST" id="user_data_checkout">
+                <form action="<?= base_url("/checkout/create"); ?>" method="POST">
                     <div class="form-group">
                         <label for="">First Name</label>
                         <input type="text" class="form-control" name="first_name" placeholder="Masukkan First Name Penerima" value="<?= $input->first_name; ?>"/>
@@ -19,9 +19,25 @@
                         <?= form_error('last_name'); ?>
                     </div>
                     <div class="form-group">
+                        <label for="">E-Mail</label>
+                        <?php $readonly = !empty($input->email) ? "readonly" : ''; ?>
+                        <input type="email" class="form-control" name="email" placeholder="Masukkan E-Mail Valid Anda" value="<?= $input->email; ?>" <?= $readonly; ?>>
+                        <?= form_error('email'); ?>
+                    </div>
+                    <div class="form-group">
                         <label for="">Alamat</label>
                         <textarea name="address" id="" cols="30" rows="5" class="form-control"><?= $input->address; ?></textarea>
                         <?= form_error('address'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">City</label>
+                        <input type="text" class="form-control" name="city" placeholder="Masukkan Provinsi Anda" value="<?= $input->city; ?>">
+                        <?= form_error('city'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Postal Code</label>
+                        <input type="text" class="form-control" name="postal_code" placeholder="Masukkan Kode Post" value="<?= $input->postal_code; ?>">
+                        <?= form_error('postal_code'); ?>
                     </div>
                     <div class="form-group">
                         <label for="">Phone</label>
@@ -29,7 +45,7 @@
                         <?= form_error('phone'); ?>
                     </div>
 
-                    <button class="btn btn-primary mt-3" id="pay-button" type="submit">Checkout</button>
+                    <button class="btn btn-primary mt-3" type="submit">Checkout</button>
                 </form>
             </div>
         </div>

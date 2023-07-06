@@ -9,15 +9,14 @@
                 <div class="card-body">
                     <h5>Nomor Order: <?= $content->invoice; ?></h5>
                     <p>Terima Kasih <b><?= $content->name; ?></b>, sudah berbelanja</p>
-                    <p>Anda Sudah Berhasil melakukan transaksi pembayaran Melalui Midtrans, dengan detail bayar:</p>
+                    <p>Silakan lakukan pembayaran untuk bisa kami proses selanjutnya dengan cara:</p>
                     <ol>
-                        <li>Transaction ID : <strong><?= $mercant_order->transaction_id; ?></strong></li>
-                        <li>Payment Type : <strong><?= ucwords(str_replace("_", " ", $mercant_order->payment_type)); ?></strong></li>
-                        <li>Date : <?= $mercant_order->transaction_time; ?></li>
-                        <li>Gross Amount: <strong>Rp. <?= number_format($mercant_order->gross_amount, 0, ',', '.'); ?>,-</strong></li>
+                        <li>Lakukan pembayaran dengan klik <?= form_open('checkout/pay', ['method' => 'POST']); ?> <input type="submit" value="PAY"> <?= form_close(); ?></li>
+                        <li>Mohon untuk memeriksa <strong>detail transaksi</strong> anda pada halaman pembayaran</li>
+                        <li>Mohon untuk <strong>screenshot bukti pembayaran anda</strong>, untuk dikirimkan sebagai bukti pembayaran</li>
+                        <li>Total pembayaran: <strong>Rp. <?= number_format($content->total, 0, ',', '.'); ?>,-</strong></li>
                     </ol>
-                    <p> Klik <a href="<?= base_url("myorder/detail/$content->invoice"); ?>">disini</a> untuk melihat detail order anda</p>
-                    <p>Terima Kasih :)</p>
+                    <p>Jika sudah, silakan kirimkan bukti transfer di halaman konfirmasi atau bisa <a href="<?= base_url("myorder/detail/$content->invoice"); ?>">klik disini!</a></p>
                     <a href="<?= base_url('/'); ?>" class="btn btn-primary"><i class="fas fa-angle-left"></i> Kembali</a>
                 </div>
             </div>
