@@ -24,6 +24,9 @@
     <?php if(isset($otp_style)) : ?>
       <link rel="stylesheet" href="<?= $otp_style; ?>">
     <?php endif; ?>
+
+    <?php 
+    echo env('TESTING') ?>
     
   </head>
   <body>
