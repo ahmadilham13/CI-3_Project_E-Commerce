@@ -1,4 +1,8 @@
 <?php 
+if($status == 'pending') {
+    $badgeStatus    = 'text-bg-dark';
+    $status         = 'Pending';
+}
 if($status == 'waiting') {
     $badgeStatus    = 'text-bg-info';
     $status         = 'Menunggu Pembayaran';

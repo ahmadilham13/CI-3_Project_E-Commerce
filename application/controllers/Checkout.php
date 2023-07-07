@@ -1,5 +1,6 @@
-<?php 
+<?php
 
+use PhpParser\Node\Stmt\Break_;
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -17,10 +18,22 @@ class Checkout extends MY_Controller {
             redirect(base_url());
             return;
         }
+
+        $params = array('server_key' => 'SB-Mid-server-dnDSJ_7_gR2EyJC-PeakXorP', 'production' => false);
+		$this->load->library('midtrans');
+		$this->midtrans->config($params);
+		$this->load->helper('url');	
     }
 
     public function index($input = null) {
-        $this->checkout->table = 'cart';
+        if(isset($_GET['status_code'])) {
+            redirect(base_url("checkout/create/$_GET[order_id]"));
+        } else {
+            if($this->session->userdata('user_checkout_data')) {
+                $this->session->unset_userdata('user_checkout_data');
+            }
+        }
+        $this->changeTable('cart');
         $data['cart']        = $this->checkout->select(
             [
                 'cart.id', 'cart.qty', 'cart.subtotal',
@@ -37,6 +50,7 @@ class Checkout extends MY_Controller {
         }
 
         $data['input']      =  $input ? $input :  (object)  $this->checkout->getDefaultValues();
+        
         $data['title']      = 'Checkout';
         $data['page']       = 'pages/checkout/index';
 
@@ -50,6 +64,7 @@ class Checkout extends MY_Controller {
             $input = (object) $this->input->post(null, true);
         }
 
+        $this->changeTable('orders');
         if(!$this->checkout->validate()) {
             return $this->index($input);
         }
@@ -60,15 +75,23 @@ class Checkout extends MY_Controller {
                         ->row()
                         ->subtotal;
 
+        if(empty($total)) {
+            return redirect(base_url());
+        }
         $data       = [
             'id_user'       => $this->id,
             'date'          => date('YmdHis'),
             'invoice'       => $this->id.date('YmdHis'),
             'total'         => $total,
-            'name'          => $input->name,
+            'first_name'    => $input->first_name,
+            'last_name'    => $input->last_name,
+            'name'          => trim($input->first_name.' '.$input->last_name),
+            'email'         => strtolower($input->email),
             'address'       => $input->address,
+            'city'          => $input->city,
+            'postal_code'   => $input->postal_code,
             'phone'         => $input->phone,
-            'status'        => 'waiting',
+            'status'        => 'pending',
         ];
 
         if($order = $this->checkout->create($data)) {
@@ -87,12 +110,20 @@ class Checkout extends MY_Controller {
             $data['title']      = 'Checkout Success';
             $data['content']    = (object) $data;
             $data['page']       = 'pages/checkout/success';
+            $data['pay_process'] = true;
+            $data['sandbox_url']    = 'https://app.sandbox.midtrans.com/snap/snap.js';
+            $data['client_key']     = 'SB-Mid-client-qtnk4WOC80ON1Cqh';
+
 
             $this->view($data);   
         } else {
             $this->session->set_flashdata('error', 'Checkout gagal');
             return $this->index($input);
         }
+    }
+
+    public function changeTable($table) {
+        $this->checkout->table = $table;
     }
 
 }

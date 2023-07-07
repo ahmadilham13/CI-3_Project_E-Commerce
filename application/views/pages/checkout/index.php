@@ -9,14 +9,35 @@
             <div class="card-body">
                 <form action="<?= base_url("/checkout/create"); ?>" method="POST">
                     <div class="form-group">
-                        <label for="">Nama</label>
-                        <input type="text" class="form-control" name="name" placeholder="Masukkan Nama Penerima" value="<?= $input->name; ?>"/>
-                        <?= form_error('name'); ?>
+                        <label for="">First Name</label>
+                        <input type="text" class="form-control" name="first_name" placeholder="Masukkan First Name Penerima" value="<?= $input->first_name; ?>"/>
+                        <?= form_error('first_name'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Last Name</label>
+                        <input type="text" class="form-control" name="last_name" placeholder="Masukkan Last Name Penerima" value="<?= $input->last_name; ?>"/>
+                        <?= form_error('last_name'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">E-Mail</label>
+                        <?php $readonly = !empty($input->email) ? "readonly" : ''; ?>
+                        <input type="email" class="form-control" name="email" placeholder="Masukkan E-Mail Valid Anda" value="<?= $input->email; ?>" <?= $readonly; ?>>
+                        <?= form_error('email'); ?>
                     </div>
                     <div class="form-group">
                         <label for="">Alamat</label>
                         <textarea name="address" id="" cols="30" rows="5" class="form-control"><?= $input->address; ?></textarea>
                         <?= form_error('address'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">City</label>
+                        <input type="text" class="form-control" name="city" placeholder="Masukkan Provinsi Anda" value="<?= $input->city; ?>">
+                        <?= form_error('city'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Postal Code</label>
+                        <input type="text" class="form-control" name="postal_code" placeholder="Masukkan Kode Post" value="<?= $input->postal_code; ?>">
+                        <?= form_error('postal_code'); ?>
                     </div>
                     <div class="form-group">
                         <label for="">Phone</label>

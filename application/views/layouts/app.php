@@ -24,9 +24,6 @@
     <?php if(isset($otp_style)) : ?>
       <link rel="stylesheet" href="<?= $otp_style; ?>">
     <?php endif; ?>
-
-    <?php 
-    echo env('TESTING') ?>
     
   </head>
   <body>
@@ -47,8 +44,47 @@
     <?php if(isset($otp_script)) : ?>
       <script src="<?= $otp_script; ?>"></script>
     <?php endif; ?>
-    <?php if(isset($imageUpload)) : ?>
-      <script src="<?= $imageUpload; ?>"></script>
+    <?php if(isset($product_script)) : ?>
+      <script src="<?= $product_script; ?>"></script>
+    <?php endif; ?>
+    
+    <?php if(isset($pay_process)) : ?>
+      <script type="text/javascript">
+        $("#pay-button").click(function(e) {
+          e.preventDefault()
+          
+          $.ajax({
+            method: 'POST',
+            url : '<?= base_url('/pay'); ?>',
+            cache: false,
+            data: {
+              order_id: $("#order_id").html()
+            },
+            success: function(data) {
+              console.log(data)
+
+              snap.pay(data, {
+                onSuccess: function(result){
+                  changeResult('success', result);
+                  console.log(result.status_message);
+                  console.log(result);
+                  // $("#payment-form").submit();
+                },
+                onPending: function(result){
+                  changeResult('pending', result);
+                  console.log(result.status_message);
+                  // $("#payment-form").submit();
+                },
+                onError: function(result){
+                  changeResult('error', result);
+                  console.log(result.status_message);
+                  // $("#payment-form").submit();
+                }
+              })
+            }
+          })
+        })
+      </script>
     <?php endif; ?>
   </body>
 </html>

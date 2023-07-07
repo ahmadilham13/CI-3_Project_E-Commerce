@@ -16,6 +16,10 @@ class Myorder extends MY_Controller {
             redirect(base_url());
             return;
         }
+        $params = array('server_key' => 'SB-Mid-server-dnDSJ_7_gR2EyJC-PeakXorP', 'production' => false);
+		$this->load->library('midtrans');
+		$this->midtrans->config($params);
+		$this->load->helper('url');	
     }
 
     public function index() {
@@ -48,7 +52,9 @@ class Myorder extends MY_Controller {
             $this->myorder->table = 'orders_confirm';
             $data['order_confirm']  = $this->myorder->where('id_orders', $data['order']->id)->first();
         }
-
+        $data['pay_process'] = true;
+        $data['sandbox_url']    = 'https://app.sandbox.midtrans.com/snap/snap.js';
+        $data['client_key']     = 'SB-Mid-client-qtnk4WOC80ON1Cqh';
         $data['page']           = 'pages/myorder/detail';
 
         $this->view($data);

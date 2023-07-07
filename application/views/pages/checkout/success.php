@@ -11,8 +11,9 @@
                     <p>Terima Kasih <b><?= $content->name; ?></b>, sudah berbelanja</p>
                     <p>Silakan lakukan pembayaran untuk bisa kami proses selanjutnya dengan cara:</p>
                     <ol>
-                        <li>Lakukan pembayaran pada rekening <strong>BCA 3245865322</strong> a/n PT. CIShop</li>
-                        <li>Sertakan keterangan denga nomor order: <strong><?= $content->invoice; ?></strong></li>
+                        <li>Lakukan pembayaran dengan klik <?= form_open('checkout/pay', ['method' => 'POST']); ?> <input type="submit" value="PAY"> <?= form_close(); ?></li>
+                        <li>Mohon untuk memeriksa <strong>detail transaksi</strong> anda pada halaman pembayaran</li>
+                        <li>Mohon untuk <strong>screenshot bukti pembayaran anda</strong>, untuk dikirimkan sebagai bukti pembayaran</li>
                         <li>Total pembayaran: <strong>Rp. <?= number_format($content->total, 0, ',', '.'); ?>,-</strong></li>
                     </ol>
                     <p>Jika sudah, silakan kirimkan bukti transfer di halaman konfirmasi atau bisa <a href="<?= base_url("myorder/detail/$content->invoice"); ?>">klik disini!</a></p>

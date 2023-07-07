@@ -7,7 +7,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
-                    Konfirmasi Order <?= $order->invoice; ?>
+                    Proof Payment for Order <?= $order->invoice; ?>
                     <div class="float-end">
                     <?php $this->load->view('layouts/_status', ['status' => $order->status]); ?>
                     </div>
@@ -28,6 +28,11 @@
                             <label for="">No. Rekening</label>
                             <input type="text" name="account_number" class="form-control" value="<?= $input->account_number; ?>" />
                             <?= form_error('account_number'); ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Payment Type</label>
+                            <input type="text" name="payment_type" class="form-control" value="<?= $input->payment_type; ?>" />
+                            <?= form_error('payment_type'); ?>
                         </div>
                         <div class="form-group">
                             <label for="">Sebesar</label>
