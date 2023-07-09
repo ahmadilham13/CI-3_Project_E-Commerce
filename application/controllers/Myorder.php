@@ -16,7 +16,7 @@ class Myorder extends MY_Controller {
             redirect(base_url());
             return;
         }
-        $params = array('server_key' => 'SB-Mid-server-dnDSJ_7_gR2EyJC-PeakXorP', 'production' => false);
+        $params = array('server_key' => env('SERVER_KEY'), 'production' => env('PRODUCTION'));
 		$this->load->library('midtrans');
 		$this->midtrans->config($params);
 		$this->load->helper('url');	
@@ -48,13 +48,42 @@ class Myorder extends MY_Controller {
         ->where('orders_detail.id_orders', $data['order']->id)
         ->get();
 
-        if($data['order']->status !== 'waiting') {
-            $this->myorder->table = 'orders_confirm';
-            $data['order_confirm']  = $this->myorder->where('id_orders', $data['order']->id)->first();
+        // if($data['order']->status !== 'waiting') {
+        //     $this->myorder->table = 'orders_confirm';
+        //     $data['order_confirm']  = $this->myorder->where('id_orders', $data['order']->id)->first();
+        // }
+        if($data['order']->status !== 'pending') {
+            $orderMercant = $this->midtrans->status($data['order']->invoice);
+            $paymentType = $orderMercant->payment_type;
+            // echo '<pre>'; print_r($orderMercant); echo '</pre>';
+            $detailPayment = [
+                'order_id'              => $orderMercant->order_id,
+                'currency'              => $orderMercant->currency,
+                'gross_amount'          => $orderMercant->gross_amount,
+                'payment_type'          => $paymentType,
+                'transaction_status'    => $orderMercant->transaction_status,
+                'transaction_time'      => $orderMercant->transaction_time
+            ];
+
+            switch($paymentType) {
+                case 'echannel':
+                        $detailPayment['bill_code']     = $orderMercant->biller_code;
+                        $detailPayment['bill_key']      = $orderMercant->bill_key;
+                    break;
+                case 'bank_transfer':
+                        $detailPayment['bank']          = $orderMercant->va_numbers[0]->bank;
+                        $detailPayment['va_number']     = $orderMercant->va_numbers[0]->va_number;
+                    break;
+            }
+
+            if($data['order']->status === 'waiting') {
+                $detailPayment['transaction_expired'] = $orderMercant->expiry_time;
+            }
+            $data['detailPayment'] = (object) $detailPayment;
         }
         $data['pay_process'] = true;
-        $data['sandbox_url']    = 'https://app.sandbox.midtrans.com/snap/snap.js';
-        $data['client_key']     = 'SB-Mid-client-qtnk4WOC80ON1Cqh';
+        $data['sandbox_url']    = env('SANDBOX_URL');
+        $data['client_key']     = env('CLIENT_KEY');
         $data['page']           = 'pages/myorder/detail';
 
         $this->view($data);

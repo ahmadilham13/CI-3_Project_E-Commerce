@@ -74,6 +74,38 @@
                     </div>
                 </div>
             <?php endif; ?>
+
+            <?php if(isset($detailPayment)) : ?>
+                <div class="row mt-3">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                Payment Detail
+                            </div>
+                            <div class="card-body">
+                                <p>Order Id: <?= $detailPayment->order_id; ?></p>
+                                <p>Payment Type: <?= $detailPayment->payment_type; ?></p>
+                                <?php if(isset($detailPayment->bank) && isset($detailPayment->va_number)): ?>
+                                    <p>Bank Name: <?= $detailPayment->bank; ?></p>
+                                    <p>VA Number: <?= $detailPayment->va_number; ?></p>
+                                <?php endif; ?>
+                                <?php if(isset($detailPayment->bill_code) && isset($detailPayment->bill_key)): ?>
+                                    <p>Bill Code: <?= $detailPayment->bill_code; ?></p>
+                                    <p>Bill Key: <?= $detailPayment->bill_key; ?></p>
+                                <?php endif; ?>
+                                <p>Currency: <?= $detailPayment->currency; ?></p>
+                                <p>Gross Amount: Rp. <?= number_format($detailPayment->gross_amount, 0, ',','.'); ?>,-</p>
+                                <p>Transaction Status: <?= $detailPayment->transaction_status; ?></p>
+                                <p>Transaction Time: <?= $detailPayment->transaction_time; ?></p>
+                                <?php if(isset($detailPayment->transaction_expired)): ?>
+                                    <p>Expiry Time: <?= $detailPayment->transaction_expired; ?></p>
+                                <?php endif; ?>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
   </main>

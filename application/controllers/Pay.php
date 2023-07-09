@@ -17,7 +17,7 @@ class Pay extends MY_Controller {
             return;
         }
 
-        $params = array('server_key' => 'SB-Mid-server-dnDSJ_7_gR2EyJC-PeakXorP', 'production' => false);
+        $params = array('server_key' => env('SERVER_KEY'), 'production' => env('PRODUCTION'));
 		$this->load->library('midtrans');
 		$this->midtrans->config($params);
 		$this->load->helper('url');	
@@ -118,61 +118,29 @@ class Pay extends MY_Controller {
     }
 
     public function proofPayment() {
-        
+        $statusCode = $_GET['status_code'];
         $orderId = $_GET['order_id'];
 
-        $data['order']  = $this->pay->where('invoice', $orderId)->first();
-
-        if(!$data['order'] || $data['order']->id_user != $this->id)  {
-            $this->session->set_flashdata('warning', 'Orders not found!!');
-            redirect(base_url('myorder'));
+        switch($statusCode) {
+            case '200':
+                $this->successPayment($orderId);
+                break;
+            case '201':
+                if($this->updateStatus($orderId)) {
+                    $this->session->set_flashdata('warning', 'Waiting for your paiment');
+                    redirect(base_url("myorder/detail/$orderId"));
+                } else {
+                    $this->session->set_flashdata('warning', 'Something Wrong for update your status Order');
+                    redirect(base_url("myorder/detail/$orderId"));
+                }
+                break;
+            case '406':
+                $statusMessage = $_GET['message'] ? $_GET['message'] : "Payment Cancelled";
+                $this->session->set_flashdata('warning', $statusMessage);
+                redirect(base_url("myorder/detail/$orderId"));
+                return;
+                break;
         }
-
-        if($data['order']->status !== 'pending') {
-            $this->session->set_flashdata('warning', 'Bukti transfer sudah dikirim');
-            redirect(base_url("myorder/detail/$orderId"));
-        }
-
-        if(!$_POST) {
-            $data['input']  = (object) $this->pay->getDefaultValues();
-        } else {
-            $data['input']  = (object) $this->input->post(null, true);
-        }
-
-        if(!empty($_FILES) && $_FILES['image']['name'] !== '') {
-            $imageName = url_title($orderId, '-', true). '-' . date('YmdHis');
-            $upload = $this->pay->uploadImage('image', $imageName);
-            if($upload) {
-                $data['input']->image       = $upload['file_name'];
-            } else {
-                $this->session->set_flashdata('error', 'Ops! Terjadi kesalahanqwqw');    
-                redirect(base_url("pay/proofPayment/$orderId?order_id=$orderId"));
-            }
-        }
-
-        if(!$this->pay->validate()) {
-            $data['title']          = 'Proof Detail Payment';
-            $data['form_action']    = base_url("pay/proofPayment/$orderId?order_id=$orderId");
-            // $data['product_script'] = '/assets/js/uploadImage.js';
-            $data['page']           = 'pages/pay/index';
-
-            $this->view($data);
-            return;
-        }
-
-        $this->pay->table = 'orders_confirm';
-
-        if($this->pay->create($data['input'])) {
-            $this->pay->table = 'orders';
-            if($this->updateStatus($orderId)) {
-                $this->session->set_flashdata('success', 'Data Order Berhasil Di Update, Status: paid');
-            } else {
-                $this->session->set_flashdata('error', 'Ops! Terjadi kesalahan');    
-            }
-        } else {
-            $this->session->set_flashdata('error', 'Ops! Terjadi kesalahan');
-        }
-        redirect(base_url("myorder/detail/$orderId"));
     }
 
     public function updateStatus($orderId) {
@@ -222,6 +190,62 @@ class Pay extends MY_Controller {
             return false;
         }
         return true;
+    }
+
+
+    public function successPayment($orderId) {
+        $data['order']  = $this->pay->where('invoice', $orderId)->first();
+
+        if(!$data['order'] || $data['order']->id_user != $this->id) {
+            $this->session->set_flashdata('warning', 'Orders not found!!');
+            redirect(base_url('myorder'));
+        }
+
+        if($data['order']->status !== 'pending') {
+            $this->session->set_flashdata('warning', 'Bukti Transfer sudah Dikirimkan');
+            redirect(base_url("myorder/detail/$orderId"));
+        }
+
+        if(!$_POST) {
+            $data['input']  = (object) $this->pay->getDefaultValues();
+        } else {
+            $data['input']  = (object) $this->input->post(null, true);
+        }
+
+        if(!empty($_FILES) && $_FILES['iamge']['name'] !== '') {
+            $imageName = url_title($orderId, '-', true). '-'. date('YmdHis');
+            $upload = $this->pay->uploadImage('image', $imageName);
+            if($upload) {
+                $data['input']->image       = $upload['file_name'];
+            } else {
+                $this->session->set_flashdata('error', 'Ops! Terjadi kesalahan');
+                // redirect(base_url("pay/proofPayment/$orderId?order_id=$orderId"));
+                redirect(base_url("pay/proofPayment/?order_id=$orderId"));
+            }
+        }
+
+        if(!$this->pay->validate()) {
+            $data['title']          = 'Prof Detail Payment';
+            $data['form_action']    = base_url("pay/proofPayment/?order_id=$orderId");
+            $data['page']           = 'pages/pay/index';
+
+            $this->view($data);
+            return;
+        }
+
+        $this->pay->table = 'orders_confirm';
+
+        if($this->pay->create($data['input'])) {
+            $this->pay->table = 'orders';
+            if($this->updateStatus($orderId)) {
+                $this->session->set_flashdata('success', 'Data Order Berhasil Di Update, Status: Paid');
+            } else {
+                $this->sesison->set_flashdata('error', 'Ops! Terjadi Kesalahan');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Ops! Terjadi kesalahan');
+        }
+        redirect(base_url("myorder/detail/$orderId"));
     }
 
 }

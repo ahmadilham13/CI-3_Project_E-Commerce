@@ -19,7 +19,7 @@ class Checkout extends MY_Controller {
             return;
         }
 
-        $params = array('server_key' => 'SB-Mid-server-dnDSJ_7_gR2EyJC-PeakXorP', 'production' => false);
+        $params = array('server_key' => env('SERVER_KEY'), 'production' => env('PRODUCTION'));
 		$this->load->library('midtrans');
 		$this->midtrans->config($params);
 		$this->load->helper('url');	
@@ -111,8 +111,8 @@ class Checkout extends MY_Controller {
             $data['content']    = (object) $data;
             $data['page']       = 'pages/checkout/success';
             $data['pay_process'] = true;
-            $data['sandbox_url']    = 'https://app.sandbox.midtrans.com/snap/snap.js';
-            $data['client_key']     = 'SB-Mid-client-qtnk4WOC80ON1Cqh';
+            $data['sandbox_url']    = env('SANDBOX_URL');
+            $data['client_key']     = env('CLIENT_KEY');
 
 
             $this->view($data);   

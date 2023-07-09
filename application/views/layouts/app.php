@@ -12,19 +12,23 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/navbar-fixed/">
 
     <!-- Boostrap core CSS-->
-    <link rel="stylesheet" href="/assets/libs/boostrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('/assets/libs/boostrap/css/bootstrap.min.css'); ?>">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="<?= base_url('/assets/css/app.css'); ?>">
     
     <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="/assets/libs/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="<?= base_url('/assets/libs/fontawesome/css/all.min.css'); ?>">
     
     <!-- OTP CSS -->
     <?php if(isset($otp_style)) : ?>
       <link rel="stylesheet" href="<?= $otp_style; ?>">
     <?php endif; ?>
     
+    <?php if(isset($sandbox_url) && isset($client_key)) : ?>
+      <script type="text/javascript" src="<?= $sandbox_url; ?>" data-client-key="<?= $client_key; ?>"></script>
+    <?php endif; ?>
+
   </head>
   <body>
    
@@ -38,9 +42,9 @@
   <?php $this->load->view($page); ?>
   <!-- Content End -->
 
-    <script src="/assets/libs/jquery/jquery-3.7.0.min.js"></script>
-    <script src="/assets/libs/boostrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/app.js"></script>
+    <script src="<?= base_url('/assets/libs/jquery/jquery-3.7.0.min.js'); ?>"></script>
+    <script src="<?= base_url('/assets/libs/boostrap/js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?= base_url('/assets/js/app.js'); ?>"></script>
     <?php if(isset($otp_script)) : ?>
       <script src="<?= $otp_script; ?>"></script>
     <?php endif; ?>
@@ -61,26 +65,20 @@
               order_id: $("#order_id").html()
             },
             success: function(data) {
-              console.log(data)
+              // console.log(data)
 
               snap.pay(data, {
                 onSuccess: function(result){
-                  changeResult('success', result);
-                  console.log(result.status_message);
-                  console.log(result);
-                  // $("#payment-form").submit();
+                  window.location = result.finish_redirect_url;
                 },
                 onPending: function(result){
-                  changeResult('pending', result);
-                  console.log(result.status_message);
-                  // $("#payment-form").submit();
+                  window.location = result.finish_redirect_url;
                 },
                 onError: function(result){
-                  changeResult('error', result);
-                  console.log(result.status_message);
-                  // $("#payment-form").submit();
+                  window.location = result.finish_redirect_url + '&message=' + result.status_message;
                 }
               })
+              return false;
             }
           })
         })

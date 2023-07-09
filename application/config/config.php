@@ -23,7 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+// $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+// $config['base_url'] = "$protocol://{$_SERVER['HTTP_HOST']}/cishop/";
+
 $config['base_url'] = 'http://cishop.test';
+// $config['base_url'] = 'https://6c04-125-164-22-191.ngrok-free.app/cishop';
 
 /*
 |--------------------------------------------------------------------------
